@@ -16,7 +16,7 @@ environment {
             }
         }
     }
-       stage("scanner"){
+       stage("Sonar Analyasis") {
         environment {
      scannerHome = tool 'sonar-server'
 }
