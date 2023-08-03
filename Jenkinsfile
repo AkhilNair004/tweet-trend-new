@@ -8,22 +8,23 @@ environment {
     PATH = "/opt/apache-maven-3.9.3/bin:$PATH"
 }
     stages {
-        stage("build"){
+        stage("build") {
             steps {
                  echo "----------- build started ----------"
                 sh 'mvn clean package'
                  echo "----------- build completed ----------"
             }
         }
-    }
-       stage('SonarQube analysis') {
-      steps {
-        script {
-          scannerHome = tool 'sonar-server'
+
+        stage ("SonarQube Scanner") {
+        environment {
+            scannerHome = tool 'sonar-server'
         }
-        withSonarQubeEnv('sonar-server') {
-          sh "${scannerHome}/bin/sonar-scanner"
-        }
-      }
+        steps{
+         withSonarQubeEnv('sonar-server') { // If you have configured more than one global server connection, you can specify its name
+      sh "${scannerHome}/bin/sonar-scanner"
     }
-}
+    }
+        }
+    }
+       
